@@ -7,7 +7,7 @@ set endPage to 1
 -- ページめくり方向
 -- 1:左めくり
 -- 2:右めくり
-set pageDirective to 1
+set pageDirection to 1
 
 -- 出力先フォルダ
 set savepath to ""
@@ -35,12 +35,20 @@ close access configPath
 set AppleScript's text item delimiters to ","
 set ls to every text item of s
 
-set endPage to item 1 of ls
-set pageDirective to item 2 of ls
-set savepath to savepath & item 3 of ls
+-- 各設定値の取得
+set endPage to (item 2 of splitKey(item 1 of ls, "="))
+set pageDirection to (item 2 of splitKey(item 2 of ls, "="))
+set savepath to savepath & (item 2 of splitKey(item 3 of ls, "="))
+
+
+on splitKey(s, delimit)
+	set AppleScript's text item delimiters to delimit
+	set ls to every text item of s
+	return ls
+end splitKey
 
 display dialog endPage
-display dialog pageDirective
+display dialog pageDirection
 display dialog savepath
 
 -- -----------------------------------------
@@ -57,7 +65,7 @@ do shell script cmd
 -- -----------------------------------------
 
 -- ページめくりキーの設定
-if pageDirective = 1 then
+if pageDirection = 1 then
 	set keyChar to (ASCII character 28)
 else
 	set keyChar to (ASCII character 29)
