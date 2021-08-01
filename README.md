@@ -1,4 +1,4 @@
-# kindleToPDFOnMac
+# kindleToPngOnMac
 
 ## 使用ツール
 
