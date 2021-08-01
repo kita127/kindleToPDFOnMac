@@ -13,8 +13,8 @@ set pageDirection to 1
 set savepath to ""
 
 -- キャプチャ位置
-set cTop to 0
-set cLeft to 0
+set x to 0
+set y to 0
 set cWidth to 0
 set cHeight to 0
 
@@ -42,8 +42,8 @@ set ls to splitWord(s, ",")
 -- 各設定値の取得
 set pageCount to (item 2 of splitWord(item 1 of ls, "="))
 set pageDirection to (item 2 of splitWord(item 2 of ls, "="))
-set cTop to (item 2 of splitWord(item 3 of ls, "="))
-set cLeft to (item 2 of splitWord(item 4 of ls, "="))
+set x to (item 2 of splitWord(item 3 of ls, "="))
+set y to (item 2 of splitWord(item 4 of ls, "="))
 set cWidth to (item 2 of splitWord(item 5 of ls, "="))
 set cHeight to (item 2 of splitWord(item 6 of ls, "="))
 set savepath to savepath & (item 2 of splitWord(item 7 of ls, "="))
@@ -66,7 +66,7 @@ display dialog savepath
 -- -----------------------------------------
 set cmd to ("mkdir " & savepath)
 
-display dialog cmd
+display dialog "出力先フォルダ : " & savepath
 
 try
 	do shell script cmd
@@ -102,7 +102,7 @@ end if
 repeat with i from 1 to pageCount
 	set out to (savepath & "p_" & i & ".png")
 	delay 1.0
-	do shell script "screencapture -R " & cTop & "," & cLeft & "," & cWidth & "," & cHeight & " " & out
+	do shell script "screencapture -R " & x & "," & y & "," & cWidth & "," & cHeight & " " & out
 	tell application "System Events"
 		keystroke keyChar
 	end tell
