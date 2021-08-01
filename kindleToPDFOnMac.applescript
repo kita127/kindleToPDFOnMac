@@ -2,41 +2,53 @@
 -- 設定値
 -- -----------------------------------------
 -- 最終ページ
-set endPage to 471
+set endPage to 1
 
 -- ページめくり方向
 -- 1:左めくり
 -- 2:右めくり
-set pageDirective to 2
+set pageDirective to 1
 
 -- 出力先フォルダ
-set savepath to "~/work/repo/kindleToPDFOnMac/output/"
+set savepath to ""
 
 
 -- -----------------------------------------
 -- config ファイル入力
--- 今の所使用していない
 -- -----------------------------------------
--- display dialog "config ファイルを選択してください"
+-- カレントディレクトリパスの取得
+tell application "Finder"
+	set tmpP to folder of (path to me) as Unicode text
+	set p to get POSIX path of tmpP
+end tell
 
---set theText to loadText(choose file)
---
---on loadText(theFile)
---	try
---		open for access theFile
---		set theText to read theFile
---	end try
---	close access theFile
---	return theText
---end loadText
---
---display dialog theText
+-- config.txt の設定値を読み出し
+set configPath to p & "config.txt"
+set s to ""
+open for access configPath
+try
+	set s to read configPath before return
+end try
+close access configPath
 
+-- config.txt の設定値を取得
+set AppleScript's text item delimiters to ","
+set ls to every text item of s
+
+set endPage to item 1 of ls
+set pageDirective to item 2 of ls
+set savepath to savepath & item 3 of ls
+
+display dialog endPage
+display dialog pageDirective
+display dialog savepath
 
 -- -----------------------------------------
 -- 出力先フォルダを作成
 -- -----------------------------------------
 set cmd to ("mkdir " & savepath)
+
+display dialog cmd
 do shell script cmd
 
 
