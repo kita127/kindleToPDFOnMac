@@ -1,3 +1,7 @@
 pageCount=471,
 pageDirection=2,
+top=1428,
+left=84,
+width=1031,
+height=1325,
 savepath=~/work/repo/kindleToPDFOnMac/output/,
