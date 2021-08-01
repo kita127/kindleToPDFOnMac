@@ -2,7 +2,7 @@
 -- 設定値
 -- -----------------------------------------
 -- 最終ページ
-set endPage to 1
+set pageCount to 1
 
 -- ページめくり方向
 -- 1:左めくり
@@ -35,7 +35,7 @@ close access configPath
 set ls to splitWord(s, ",")
 
 -- 各設定値の取得
-set endPage to (item 2 of splitWord(item 1 of ls, "="))
+set pageCount to (item 2 of splitWord(item 1 of ls, "="))
 set pageDirection to (item 2 of splitWord(item 2 of ls, "="))
 set savepath to savepath & (item 2 of splitWord(item 3 of ls, "="))
 
@@ -47,7 +47,7 @@ on splitWord(s, delimit)
 end splitWord
 
 (*
-display dialog endPage
+display dialog pageCount
 display dialog pageDirection
 display dialog savepath
 *)
@@ -72,8 +72,10 @@ end try
 
 -- ページめくりキーの設定
 if pageDirection = 1 then
+	-- 左キー
 	set keyChar to (ASCII character 28)
 else
+	-- 右キー
 	set keyChar to (ASCII character 29)
 end if
 
@@ -86,12 +88,12 @@ if target is not "" then
 end if
 
 -- -----------------------------------------
--- Kindle をスクショ
+-- pageCount までスクショ
 -- -----------------------------------------
-repeat with i from 1 to endPage
+repeat with i from 1 to pageCount
 	set out to (savepath & "p_" & i & ".png")
 	delay 1.0
-	do shell script "screencapture " & out
+	do shell script "screencapture -R 1428,84,1031,1325 " & out
 	tell application "System Events"
 		keystroke keyChar
 	end tell
