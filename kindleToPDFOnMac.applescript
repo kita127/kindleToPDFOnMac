@@ -39,16 +39,18 @@ set endPage to (item 2 of splitWord(item 1 of ls, "="))
 set pageDirection to (item 2 of splitWord(item 2 of ls, "="))
 set savepath to savepath & (item 2 of splitWord(item 3 of ls, "="))
 
-
+-- delimit でスプリットした文字列リストを返す
 on splitWord(s, delimit)
 	set AppleScript's text item delimiters to delimit
 	set ls to every text item of s
 	return ls
 end splitWord
 
+(*
 display dialog endPage
 display dialog pageDirection
 display dialog savepath
+*)
 
 -- -----------------------------------------
 -- 出力先フォルダを作成
@@ -56,8 +58,13 @@ display dialog savepath
 set cmd to ("mkdir " & savepath)
 
 display dialog cmd
-do shell script cmd
 
+try
+	do shell script cmd
+on error
+	display dialog "出力先フォルダが既に存在するため処理を中断します"
+	return
+end try
 
 -- -----------------------------------------
 -- Kindle をオープン
