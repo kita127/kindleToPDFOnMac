@@ -107,3 +107,5 @@ repeat with i from 1 to pageCount
 		keystroke keyChar
 	end tell
 end repeat
+
+display dialog "ÀsŠ®—¹"
