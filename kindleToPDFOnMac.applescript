@@ -1,7 +1,15 @@
 -- -----------------------------------------
 -- 設定値
 -- -----------------------------------------
+-- 最終ページ
 set endPage to 471
+
+-- ページめくり方向
+-- 1:左めくり
+-- 2:右めくり
+set pageDirective to 2
+
+-- 出力先フォルダ
 set savepath to "~/work/repo/kindleToPDFOnMac/output/"
 
 
@@ -36,9 +44,14 @@ do shell script cmd
 -- Kindle をオープン
 -- -----------------------------------------
 
--- 右めくりのキー
-set keyChar to (ASCII character 29)
+-- ページめくりキーの設定
+if pageDirective = 1 then
+	set keyChar to (ASCII character 28)
+else
+	set keyChar to (ASCII character 29)
+end if
 
+-- Kindle アプリケーションをアクティブ
 set target to "Kindle"
 if target is not "" then
 	tell application target
@@ -57,5 +70,3 @@ repeat with i from 1 to endPage
 		keystroke keyChar
 	end tell
 end repeat
-
-
