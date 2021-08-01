@@ -32,20 +32,19 @@ end try
 close access configPath
 
 -- config.txt ‚Ìİ’è’l‚ğæ“¾
-set AppleScript's text item delimiters to ","
-set ls to every text item of s
+set ls to splitWord(s, ",")
 
 -- Šeİ’è’l‚Ìæ“¾
-set endPage to (item 2 of splitKey(item 1 of ls, "="))
-set pageDirection to (item 2 of splitKey(item 2 of ls, "="))
-set savepath to savepath & (item 2 of splitKey(item 3 of ls, "="))
+set endPage to (item 2 of splitWord(item 1 of ls, "="))
+set pageDirection to (item 2 of splitWord(item 2 of ls, "="))
+set savepath to savepath & (item 2 of splitWord(item 3 of ls, "="))
 
 
-on splitKey(s, delimit)
+on splitWord(s, delimit)
 	set AppleScript's text item delimiters to delimit
 	set ls to every text item of s
 	return ls
-end splitKey
+end splitWord
 
 display dialog endPage
 display dialog pageDirection
