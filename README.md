@@ -1,5 +1,7 @@
 # kindleToPngOnMac
 
+![demo](./images/image1.gif)
+
 ## 使用ツール
 
 * Kindle
