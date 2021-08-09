@@ -97,25 +97,41 @@ if target is not "" then
 end if
 
 -- -----------------------------------------
--- pageCount までスクショ
+-- PDF 生成
 -- -----------------------------------------
+
+delay 1.0
 repeat with i from 1 to pageCount
 	set out to (savepath & i & ".png")
-	delay 1.0
+	
+	-- スクリーンショット
 	do shell script "screencapture -R " & x & "," & y & "," & cWidth & "," & cHeight & " " & out
+	
+	-- ページめくり
 	tell application "System Events"
 		keystroke keyChar
 	end tell
+	
+	-- OCR 処理し PDF 出力	
+	do shell script "/usr/local/bin/tesseract " & savepath & i & ".png  " & savepath & i & " -l eng+jpn pdf"
+	
+	-- PNG ファイルの削除
+	do shell script "rm " & savepath & "*.png"
+	
 end repeat
 
 -- -----------------------------------------
--- 
+-- OCR 埋め込み PDF 生成
 -- -----------------------------------------
 
+(*
 -- OCR 埋め込んだ PDF の生成
 repeat with i from 1 to pageCount
 	do shell script "/usr/local/bin/tesseract " & savepath & i & ".png  " & savepath & i & " -l eng+jpn pdf"
 end repeat
 
+-- PNG ファイルの削除
+do shell script "rm " & savepath & "*.png"
+*)
 
 display dialog "実行完了"
