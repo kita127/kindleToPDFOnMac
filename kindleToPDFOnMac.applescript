@@ -100,12 +100,22 @@ end if
 -- pageCount までスクショ
 -- -----------------------------------------
 repeat with i from 1 to pageCount
-	set out to (savepath & "p_" & i & ".png")
+	set out to (savepath & i & ".png")
 	delay 1.0
 	do shell script "screencapture -R " & x & "," & y & "," & cWidth & "," & cHeight & " " & out
 	tell application "System Events"
 		keystroke keyChar
 	end tell
 end repeat
+
+-- -----------------------------------------
+-- 
+-- -----------------------------------------
+
+-- OCR 埋め込んだ PDF の生成
+repeat with i from 1 to pageCount
+	do shell script "/usr/local/bin/tesseract " & savepath & i & ".png  " & savepath & i & " -l eng+jpn pdf"
+end repeat
+
 
 display dialog "実行完了"
