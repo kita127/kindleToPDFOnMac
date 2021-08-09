@@ -1,4 +1,4 @@
-# kindleToPDFOnMac
+# kindleToPDFForMac
 
 Kindle を OCR 付き PDF に変換する Mac 用のスクリプトです. 
 
