@@ -18,6 +18,9 @@ set y to 0
 set cWidth to 0
 set cHeight to 0
 
+-- OCR 有効/無効
+set ocrEnable to 1
+
 -- -----------------------------------------
 -- config ファイル入力
 -- -----------------------------------------
@@ -47,6 +50,17 @@ set y to (item 2 of splitWord(item 4 of ls, "="))
 set cWidth to (item 2 of splitWord(item 5 of ls, "="))
 set cHeight to (item 2 of splitWord(item 6 of ls, "="))
 set savepath to savepath & (item 2 of splitWord(item 7 of ls, "="))
+set ocrTemp to (item 2 of splitWord(item 8 of ls, "="))
+
+if ocrTemp is "0" then
+	set ocrEnable to false
+else if ocrTemp is "1" then
+	set ocrEnable to true
+else
+	-- 不正な値
+	display dialog "OCR の値は 0 か 1 を設定してください"
+	return
+end if
 
 -- delimit でスプリットした文字列リストを返す
 on splitWord(s, delimit)
@@ -112,11 +126,15 @@ repeat with i from 1 to pageCount
 		keystroke keyChar
 	end tell
 	
-	-- OCR 処理し PDF 出力	
-	do shell script "/usr/local/bin/tesseract " & savepath & i & ".png  " & savepath & i & " -l eng+jpn pdf"
-	
-	-- PNG ファイルの削除
-	do shell script "rm " & savepath & "*.png"
+	if ocrEnable then
+		-- OCR 処理し PDF 出力	
+		do shell script "/usr/local/bin/tesseract " & savepath & i & ".png  " & savepath & i & " -l eng+jpn pdf"
+		
+		-- PNG ファイルの削除
+		do shell script "rm " & savepath & "*.png"
+	else
+		delay 1.0
+	end if
 	
 end repeat
 
