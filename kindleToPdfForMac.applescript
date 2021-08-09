@@ -1,36 +1,36 @@
 -- -----------------------------------------
--- İ’è’l
+-- è¨­å®šå€¤
 -- -----------------------------------------
--- ÅIƒy[ƒW
+-- æœ€çµ‚ãƒšãƒ¼ã‚¸
 set pageCount to 1
 
--- ƒy[ƒW‚ß‚­‚è•ûŒü
--- 1:¶‚ß‚­‚è
--- 2:‰E‚ß‚­‚è
+-- ãƒšãƒ¼ã‚¸ã‚ãã‚Šæ–¹å‘
+-- 1:å·¦ã‚ãã‚Š
+-- 2:å³ã‚ãã‚Š
 set pageDirection to 1
 
--- o—ÍæƒtƒHƒ‹ƒ_
+-- å‡ºåŠ›å…ˆãƒ•ã‚©ãƒ«ãƒ€
 set savepath to ""
 
--- ƒLƒƒƒvƒ`ƒƒˆÊ’u
+-- ã‚­ãƒ£ãƒ—ãƒãƒ£ä½ç½®
 set x to 0
 set y to 0
 set cWidth to 0
 set cHeight to 0
 
--- OCR —LŒø/–³Œø
+-- OCR æœ‰åŠ¹/ç„¡åŠ¹
 set ocrEnable to 1
 
 -- -----------------------------------------
--- config ƒtƒ@ƒCƒ‹“ü—Í
+-- config ãƒ•ã‚¡ã‚¤ãƒ«å…¥åŠ›
 -- -----------------------------------------
--- ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠƒpƒX‚Ìæ“¾
+-- ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹ã®å–å¾—
 tell application "Finder"
 	set tmpP to folder of (path to me) as Unicode text
 	set p to get POSIX path of tmpP
 end tell
 
--- config.txt ‚Ìİ’è’l‚ğ“Ç‚İo‚µ
+-- config.txt ã®è¨­å®šå€¤ã‚’èª­ã¿å‡ºã—
 set configPath to p & "config.txt"
 set s to ""
 open for access configPath
@@ -39,10 +39,10 @@ try
 end try
 close access configPath
 
--- config.txt ‚Ìİ’è’l‚ğæ“¾
+-- config.txt ã®è¨­å®šå€¤ã‚’å–å¾—
 set ls to splitWord(s, ",")
 
--- Šeİ’è’l‚Ìæ“¾
+-- å„è¨­å®šå€¤ã®å–å¾—
 set pageCount to (item 2 of splitWord(item 1 of ls, "="))
 set pageDirection to (item 2 of splitWord(item 2 of ls, "="))
 set x to (item 2 of splitWord(item 3 of ls, "="))
@@ -57,12 +57,12 @@ if ocrTemp is "0" then
 else if ocrTemp is "1" then
 	set ocrEnable to true
 else
-	-- •s³‚È’l
-	display dialog "OCR ‚Ì’l‚Í 0 ‚© 1 ‚ğİ’è‚µ‚Ä‚­‚¾‚³‚¢"
+	-- ä¸æ­£ãªå€¤
+	display dialog "OCR ã®å€¤ã¯ 0 ã‹ 1 ã‚’è¨­å®šã—ã¦ãã ã•ã„"
 	return
 end if
 
--- delimit ‚ÅƒXƒvƒŠƒbƒg‚µ‚½•¶š—ñƒŠƒXƒg‚ğ•Ô‚·
+-- delimit ã§ã‚¹ãƒ—ãƒªãƒƒãƒˆã—ãŸæ–‡å­—åˆ—ãƒªã‚¹ãƒˆã‚’è¿”ã™
 on splitWord(s, delimit)
 	set AppleScript's text item delimiters to delimit
 	set ls to every text item of s
@@ -76,33 +76,33 @@ display dialog savepath
 *)
 
 -- -----------------------------------------
--- o—ÍæƒtƒHƒ‹ƒ_‚ğì¬
+-- å‡ºåŠ›å…ˆãƒ•ã‚©ãƒ«ãƒ€ã‚’ä½œæˆ
 -- -----------------------------------------
 set cmd to ("mkdir " & savepath)
 
-display dialog "o—ÍæƒtƒHƒ‹ƒ_ : " & savepath
+display dialog "å‡ºåŠ›å…ˆãƒ•ã‚©ãƒ«ãƒ€ : " & savepath
 
 try
 	do shell script cmd
 on error
-	display dialog "o—ÍæƒtƒHƒ‹ƒ_‚ªŠù‚É‘¶İ‚·‚é‚½‚ßˆ—‚ğ’†’f‚µ‚Ü‚·"
+	display dialog "å‡ºåŠ›å…ˆãƒ•ã‚©ãƒ«ãƒ€ãŒæ—¢ã«å­˜åœ¨ã™ã‚‹ãŸã‚å‡¦ç†ã‚’ä¸­æ–­ã—ã¾ã™"
 	return
 end try
 
 -- -----------------------------------------
--- Kindle ‚ğƒI[ƒvƒ“
+-- Kindle ã‚’ã‚ªãƒ¼ãƒ—ãƒ³
 -- -----------------------------------------
 
--- ƒy[ƒW‚ß‚­‚èƒL[‚Ìİ’è
+-- ãƒšãƒ¼ã‚¸ã‚ãã‚Šã‚­ãƒ¼ã®è¨­å®š
 if pageDirection = 1 then
-	-- ¶ƒL[
+	-- å·¦ã‚­ãƒ¼
 	set keyChar to (ASCII character 28)
 else
-	-- ‰EƒL[
+	-- å³ã‚­ãƒ¼
 	set keyChar to (ASCII character 29)
 end if
 
--- Kindle ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ğƒAƒNƒeƒBƒu
+-- Kindle ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ã‚¢ã‚¯ãƒ†ã‚£ãƒ–
 set target to "Kindle"
 if target is not "" then
 	tell application target
@@ -111,26 +111,26 @@ if target is not "" then
 end if
 
 -- -----------------------------------------
--- OCR •t‚«‚Ì PDF ¶¬
+-- OCR ä»˜ãã® PDF ç”Ÿæˆ
 -- -----------------------------------------
 
 delay 1.0
 repeat with i from 1 to pageCount
 	set out to (savepath & i & ".png")
 	
-	-- ƒXƒNƒŠ[ƒ“ƒVƒ‡ƒbƒg
+	-- ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚·ãƒ§ãƒƒãƒˆ
 	do shell script "screencapture -R " & x & "," & y & "," & cWidth & "," & cHeight & " " & out
 	
-	-- ƒy[ƒW‚ß‚­‚è
+	-- ãƒšãƒ¼ã‚¸ã‚ãã‚Š
 	tell application "System Events"
 		keystroke keyChar
 	end tell
 	
 	if ocrEnable then
-		-- OCR ˆ—‚µ PDF o—Í	
+		-- OCR å‡¦ç†ã— PDF å‡ºåŠ›	
 		do shell script "/usr/local/bin/tesseract " & savepath & i & ".png  " & savepath & i & " -l eng+jpn pdf"
 		
-		-- PNG ƒtƒ@ƒCƒ‹‚Ìíœ
+		-- PNG ãƒ•ã‚¡ã‚¤ãƒ«ã®å‰Šé™¤
 		do shell script "rm " & savepath & "*.png"
 	else
 		delay 1.0
@@ -138,4 +138,4 @@ repeat with i from 1 to pageCount
 	
 end repeat
 
-display dialog "ÀsŠ®—¹"
+display dialog "å®Ÿè¡Œå®Œäº†"
