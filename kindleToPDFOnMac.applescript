@@ -97,7 +97,7 @@ if target is not "" then
 end if
 
 -- -----------------------------------------
--- PDF 生成
+-- OCR 付きの PDF 生成
 -- -----------------------------------------
 
 delay 1.0
@@ -119,19 +119,5 @@ repeat with i from 1 to pageCount
 	do shell script "rm " & savepath & "*.png"
 	
 end repeat
-
--- -----------------------------------------
--- OCR 埋め込み PDF 生成
--- -----------------------------------------
-
-(*
--- OCR 埋め込んだ PDF の生成
-repeat with i from 1 to pageCount
-	do shell script "/usr/local/bin/tesseract " & savepath & i & ".png  " & savepath & i & " -l eng+jpn pdf"
-end repeat
-
--- PNG ファイルの削除
-do shell script "rm " & savepath & "*.png"
-*)
 
 display dialog "実行完了"
